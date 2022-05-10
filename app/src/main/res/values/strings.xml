@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Book of Jungle</string>
+    <string name="info1">Hello player.\n Its time to get acquainted \n with the rules of the game!</string>
+    <string name="info2">You will start the circuit.\n And you will not be left without \n victorious balls in any case.</string>
+    <string name="info3">Achievements are summarized \n and entered into the leaderboard,\nit is located in the "Results".</string>
+    <string name="info4">Each value that will be at \n the moment the circle stops will \n bring you game points.</string>
+    <string name="info5">Start the game \n and set new records!</string>
+    <string name="settings">Game Complexity:</string>
+    <string name="settings1">On easy difficulty,\n you can get the most reward.</string>
+    <string name="settings2">On medium difficulty,\n the reward is not very big.</string>
+    <string name="settings3">This is for those \n who are not afraid of challenges!\n We know you are one of them!</string>
+    <string name="result">Game Result:</string>
+    <string name="game1">Game Balls:</string>
+    <string name="game2">Attempts:</string>
+    <string name="game3">5</string>
+    <string name="game4">0</string>
+    <string name="facebook_app_id">719840455877271</string>
+</resources>
