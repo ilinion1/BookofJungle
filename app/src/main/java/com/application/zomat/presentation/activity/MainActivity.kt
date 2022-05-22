@@ -26,7 +26,6 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var cloL: String? = null
-    private var allLin = ""
 
     private var google_adid: String = "null"
     var af_userid: String = "null"
@@ -205,23 +204,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setDataServer() {
-        try {
-            lifecycleScope.launch {
-                cloL = ApiFactory.create(this@MainActivity).setDataServer(
-                    google_adid,af_userid,fb_deepLink,tmz,adb,redirect_response_data,adgroup_id,
-                    engmnt_source,retargeting_conversion_type,is_incentivized,orig_cost,is_first_launch,
-                    af_click_lookback,af_cpi,iscache,click_time,is_branded_link,match_type,adset,
-                    af_channel,campaign_id,install_time,media_source,agency,af_siteid,af_status,af_sub1,
-                    cost_cents_USD,af_sub5,af_sub4,af_sub3,af_sub2,adset_id,esp_name,campaign,http_referrer,
-                    is_universal_link,is_retargeting,adgroup
-                ).offerLink
+        lifecycleScope.launch {
+            try {
+                cloL = ApiFactory.create(this@MainActivity).setDataServer(google_adid,
+                    af_userid, fb_deepLink, tmz, adb, redirect_response_data, adgroup_id, engmnt_source,
+                    retargeting_conversion_type, is_incentivized, orig_cost, is_first_launch, af_click_lookback,
+                    af_cpi, iscache, click_time, is_branded_link, match_type, adset, af_channel,
+                    campaign_id, install_time, media_source, agency, af_siteid, af_status,
+                    af_sub1, cost_cents_USD, af_sub5, af_sub4, af_sub3, af_sub2, adset_id, esp_name,
+                    campaign, http_referrer, is_universal_link, is_retargeting, adgroup).offerLink
                 nextScreen()
+            } catch (e: Exception) {
+                Toast.makeText(this@MainActivity, "No Internet!", Toast.LENGTH_LONG).show()
+                Log.d("errorGetData", "$e")
             }
-        } catch (e: Exception) {
-            Toast.makeText(this@MainActivity, "No Internet!", Toast.LENGTH_LONG).show()
-            Log.d("errorGetData", "$e")
         }
-
     }
 
 
