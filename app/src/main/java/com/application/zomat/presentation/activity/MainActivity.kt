@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.application.zomat.data.ApiFactory
-import com.application.zomat.data.dto.AllData
 import com.application.zomat.databinding.ActivityMainBinding
 import com.application.zomat.presentation.MyApplication
 import com.appsflyer.AppsFlyerLib
@@ -26,13 +25,48 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var cloacaLink: String? = null
-    private var appsFlyerParams: Map<String, Any>? = null
-    private var googleId: String? = null
-    var appsFlyerUserId: String? = null
-    private var deepLink = "null"
-    private var devTmz: String? = null
-    private var adb: Boolean? = null
+    private var cloL: String? = null
+    private var allLin = ""
+
+    private var google_adid: String = "null"
+    var af_userid: String = "null"
+    private var fb_deepLink = "null"
+    private var tmz: String = "null"
+    private var adb: String = "null"
+    private var redirect_response_data: String = "null"
+    private var adgroup_id: String = "null"
+    private var engmnt_source: String = "null"
+    private var retargeting_conversion_type: String = "null"
+    private var is_incentivized: String = "null"
+    private var orig_cost: String = "null"
+    private var is_first_launch: String = "null"
+    private var af_click_lookback: String = "null"
+    private var af_cpi: String = "null"
+    private var iscache: String = "null"
+    private var click_time: String = "null"
+    private var is_branded_link: String = "null"
+    private var match_type: String = "null"
+    private var adset: String = "null"
+    private var af_channel: String = "null"
+    private var campaign_id: String = "null"
+    private var install_time: String = "null"
+    private var media_source: String = "null"
+    private var agency: String = "null"
+    private var af_siteid: String = "null"
+    private var af_status: String = "null"
+    private var af_sub1: String = "null"
+    private var cost_cents_USD: String = "null"
+    private var af_sub5: String = "null"
+    private var af_sub4: String = "null"
+    private var af_sub3: String = "null"
+    private var af_sub2: String = "null"
+    private var adset_id: String = "null"
+    private var esp_name: String = "null"
+    private var campaign: String = "null"
+    private var http_referrer: String = "null"
+    private var is_universal_link: String = "null"
+    private var is_retargeting: String = "null"
+    private var adgroup: String = "null"
 
 
     private val user by lazy {
@@ -55,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setVisibilityView(){
+    private fun setVisibilityView() {
         binding.textView.visibility = View.GONE
         binding.textView3.visibility = View.GONE
         binding.textView2.visibility = View.GONE
@@ -100,23 +134,57 @@ class MainActivity : AppCompatActivity() {
         AppLinkData.fetchDeferredAppLinkData(
             this
         ) {
-            deepLink = it?.targetUri.toString()
+            fb_deepLink = it?.targetUri.toString()
         }
     }
 
     private fun getGoogleID() {
-        googleId = AdvertisingIdClient.getAdvertisingIdInfo(this).id.toString()
-        googleId?.let {
+        google_adid = AdvertisingIdClient.getAdvertisingIdInfo(this).id.toString()
+        google_adid.let {
             OneSignal.setExternalUserId(it)
         }
     }
 
-
     private fun getAppsFlyerParams() {
-        appsFlyerUserId = AppsFlyerLib.getInstance().getAppsFlyerUID(this)
+        af_userid = AppsFlyerLib.getInstance().getAppsFlyerUID(this).toString()
         MyApplication.liveDataAppsFlyer.observe(this) {
-            if (it != null){
-                appsFlyerParams = it
+            it.forEach {
+                when (it.key) {
+                    "redirect_response_data" -> { redirect_response_data = it.value?.toString()}
+                    "adgroup_id" -> { adgroup_id = it.value?.toString()}
+                    "engmnt_source" -> { engmnt_source = it.value?.toString()}
+                    "retargeting_conversion_type" -> { retargeting_conversion_type = it.value?.toString()}
+                    "is_incentivized" -> { is_incentivized = it.value?.toString()}
+                    "orig_cost" -> { orig_cost = it.value?.toString()}
+                    "is_first_launch" -> { is_first_launch = it.value?.toString()}
+                    "af_click_lookback" -> { af_click_lookback = it.value?.toString()}
+                    "af_cpi" -> { af_cpi = it.value?.toString()}
+                    "iscache" -> { iscache = it.value?.toString()}
+                    "click_time" -> { click_time = it.value?.toString()}
+                    "is_branded_link" -> { is_branded_link = it.value?.toString()}
+                    "match_type" -> { match_type = it.value?.toString()}
+                    "adset" -> { adset = it.value?.toString()}
+                    "af_channel" -> { af_channel = it.value?.toString()}
+                    "campaign_id" -> { campaign_id = it.value?.toString()}
+                    "install_time" -> { install_time = it.value?.toString()}
+                    "media_source" -> { media_source = it.value?.toString()}
+                    "agency" -> { agency = it.value?.toString()}
+                    "af_siteid" -> { af_siteid = it.value?.toString()}
+                    "af_status" -> { af_status = it.value?.toString()}
+                    "af_sub1" -> { af_sub1 = it.value?.toString()}
+                    "cost_cents_USD" -> { cost_cents_USD = it.value?.toString()}
+                    "af_sub5" -> { af_sub5 = it.value?.toString()}
+                    "af_sub4" -> { af_sub4 = it.value?.toString()}
+                    "af_sub3" -> { af_sub3 = it.value?.toString()}
+                    "af_sub2" -> { af_sub2 = it.value?.toString()}
+                    "adset_id" -> { adset_id = it.value?.toString()}
+                    "esp_name" -> { esp_name = it.value?.toString()}
+                    "campaign" -> { campaign = it.value?.toString()}
+                    "http_referrer" -> { http_referrer = it.value?.toString()}
+                    "is_universal_link" -> { is_universal_link = it.value?.toString()}
+                    "is_retargeting" -> { is_retargeting = it.value?.toString()}
+                    "adgroup" -> { adgroup = it.value?.toString()}
+                }
             }
             getSystemicData()
             setDataServer()
@@ -124,40 +192,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getSystemicData() {
-        devTmz = TimeZone.getDefault().id
-        adb = Settings.Secure.getInt(applicationContext.contentResolver,
-            Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) != 0
+        lifecycleScope.launch {
+            tmz = TimeZone.getDefault().id
+        }
+        lifecycleScope.launch {
+             val adb2= Settings.Secure.getInt(
+                applicationContext.contentResolver,
+                Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0
+            ) != 0
+            adb = adb2.toString()
+        }
     }
 
-
-    private fun setDataServer(){
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                val allData = AllData(
-                    googleId = googleId, appsFlyerUserId = appsFlyerUserId ,deepLink = deepLink,
-                    devTmz = devTmz, adb = adb, appsFlyerParams = appsFlyerParams
-                )
-                lifecycleScope.launch {
-                    cloacaLink = ApiFactory.create(this@MainActivity).setDataServer(allData).offerLink
-                    nextScreen()
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@MainActivity, "No Internet!", Toast.LENGTH_LONG).show()
-                }
-                Log.d("errorGetData", "$e")
+    private fun setDataServer() {
+        try {
+            lifecycleScope.launch {
+                cloL = ApiFactory.create(this@MainActivity).setDataServer(
+                    google_adid,af_userid,fb_deepLink,tmz,adb,redirect_response_data,adgroup_id,
+                    engmnt_source,retargeting_conversion_type,is_incentivized,orig_cost,is_first_launch,
+                    af_click_lookback,af_cpi,iscache,click_time,is_branded_link,match_type,adset,
+                    af_channel,campaign_id,install_time,media_source,agency,af_siteid,af_status,af_sub1,
+                    cost_cents_USD,af_sub5,af_sub4,af_sub3,af_sub2,adset_id,esp_name,campaign,http_referrer,
+                    is_universal_link,is_retargeting,adgroup
+                ).offerLink
+                nextScreen()
             }
+        } catch (e: Exception) {
+            Toast.makeText(this@MainActivity, "No Internet!", Toast.LENGTH_LONG).show()
+            Log.d("errorGetData", "$e")
         }
+
     }
 
 
     private fun nextScreen() {
-        if (cloacaLink == null || cloacaLink == "error") {
+        if (cloL == null || cloL == "msg:poshel nahui") {
             startActivity(Intent(this, MenuActivity::class.java))
         } else {
             Intent(this, WebViewActivity::class.java).apply {
-                link.edit().putString("link", "$cloacaLink").apply()
-                putExtra("link", cloacaLink)
+                link.edit().putString("link", "$cloL").apply()
+                putExtra("link", cloL)
                 startActivity(this)
             }
         }
