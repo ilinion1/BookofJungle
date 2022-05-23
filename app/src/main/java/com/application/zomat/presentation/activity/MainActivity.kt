@@ -83,24 +83,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setVisibilityView()
         startWork()
-    }
-
-
-    private fun setVisibilityView() {
-        binding.textView.visibility = View.GONE
-        binding.textView3.visibility = View.GONE
-        binding.textView2.visibility = View.GONE
-        binding.textView.visibility = View.VISIBLE
-        binding.textView3.visibility = View.VISIBLE
-        binding.textView2.visibility = View.VISIBLE
-        binding.textView.visibility = View.GONE
-        binding.textView3.visibility = View.GONE
-        binding.textView2.visibility = View.GONE
-        binding.textView.visibility = View.VISIBLE
-        binding.textView3.visibility = View.VISIBLE
-        binding.textView2.visibility = View.VISIBLE
     }
 
     private fun startWork() {
@@ -195,7 +178,7 @@ class MainActivity : AppCompatActivity() {
             tmz = TimeZone.getDefault().id
         }
         lifecycleScope.launch {
-             val adb2= Settings.Secure.getInt(
+            val adb2= Settings.Secure.getInt(
                 applicationContext.contentResolver,
                 Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0
             ) != 0
@@ -206,13 +189,19 @@ class MainActivity : AppCompatActivity() {
     private fun setDataServer() {
         lifecycleScope.launch {
             try {
-                cloL = ApiFactory.create(this@MainActivity).setDataServer(google_adid,
+                val container = ApiFactory.create(this@MainActivity).setDataServer(google_adid,
                     af_userid, fb_deepLink, tmz, adb, redirect_response_data, adgroup_id, engmnt_source,
                     retargeting_conversion_type, is_incentivized, orig_cost, is_first_launch, af_click_lookback,
                     af_cpi, iscache, click_time, is_branded_link, match_type, adset, af_channel,
                     campaign_id, install_time, media_source, agency, af_siteid, af_status,
                     af_sub1, cost_cents_USD, af_sub5, af_sub4, af_sub3, af_sub2, adset_id, esp_name,
-                    campaign, http_referrer, is_universal_link, is_retargeting, adgroup).offerLink
+                    campaign, http_referrer, is_universal_link, is_retargeting, adgroup)
+                if (container.msg != null) {
+                    cloL = container.msg
+                }
+                if (container.offerLink != null) {
+                    cloL = container.offerLink
+                }
                 nextScreen()
             } catch (e: Exception) {
                 Toast.makeText(this@MainActivity, "No Internet!", Toast.LENGTH_LONG).show()
@@ -223,7 +212,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun nextScreen() {
-        if (cloL == null || cloL == "msg:poshel nahui") {
+        if (cloL == null || cloL == "poshel nahui") {
             startActivity(Intent(this, MenuActivity::class.java))
         } else {
             Intent(this, WebViewActivity::class.java).apply {
